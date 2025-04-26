@@ -22,7 +22,7 @@ body {
 }
 .card-grid {
     width: 700px;
-    margin: 0 auto 30px auto;
+    margin: 30px auto 30px auto;
     justify-content: center;
     display: grid;
     grid-gap: 2rem;
