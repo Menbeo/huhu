@@ -11,13 +11,13 @@
     <div class="topnav">
         <h1>ESP32 CONTROLL</h1>
         <h3> made by: group Meo </h3>
+        <p class="gray-label">BLE state: <strong><span id="bleState" style="color:#d13a30;">Disconnected</span></strong></p>
     </div>
     <div class="content">
-        <p class="gray-label">BLE state: <strong><span id="bleState" style="color:#d13a30;">Disconnected</span></strong></p>
         <div class="card-grid ">
             <div class = "slidecontainter">
                 <h2> Encoder controll </h2>
-                <input type ="range" min="0" max = "255">
+                <input type ="range" min="0" max = "255" id = "encoders_speed_range">
             </div>
         </div>
         <div class="card-grid">
@@ -50,6 +50,13 @@
     var bleServer;
     var bleServiceFound;
     var sensorCharacteristicFound;
+    //slider
+    function updateSliderValue() {
+      var slider = document.getElementById("encoderSlider");
+      var output = document.getElementById("sliderValue");
+      output.textContent = slider.value;
+    }
+
 
     // Connect Button
     connectButton.addEventListener('click', () => {
