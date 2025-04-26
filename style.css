@@ -21,7 +21,8 @@ body {
     padding: 50px;
 }
 .card-grid {
-    width: 700px;
+    width: 800px;
+    height: auto;
     margin: 30px auto 30px auto;
     justify-content: center;
     display: grid;
@@ -37,7 +38,7 @@ body {
 }
 .card:hover{
     transform: translateY(-4px);
-    background: linear-gradient(to bottom right, #1a73e8, #4ecdc4);
+    background: linear-gradient(to bottom right, #74ebd5, #acb6e5);
 }
 
 .slider{
