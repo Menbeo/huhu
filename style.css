@@ -32,6 +32,16 @@ body {
      background-image: linear-gradient(to bottom, #26b7cd, #61bdaf);
 /*     box-shadow: 2px 2px 12px 1px rgba(140,140,140,.5); */
 }
+
+.slider{
+    display: flex;
+    flex-direction: column-reverse;
+    margin-bottom: 1rem;
+}
+.slider:hover{
+    opacity:1'
+}
+    
 button {
     color: white;
     padding: 14px 20px;
