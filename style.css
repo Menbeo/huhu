@@ -21,7 +21,7 @@ body {
     padding: 50px;
 }
 .card-grid {
-    width: 800px;
+    width: 700px;
     align-items: stretch;
     margin: 20px;
     display: grid;
