@@ -24,13 +24,13 @@
         <div class="card-grid">
             <div class="card">
                 <h2> Encoder controll </h2>
-                <p> Value: <span id = "demo"> </span></p>
-                <input type ="range" min="0" max = "255" id = "encoders_speed_range">
+                <input type ="range" min="0" max = "255" id = "speedSlider">
+                <p>Speed: <span id="speedValue">0</span></p>
             </div>
+            
             <div class="card">
                 <h2>Motor Current speed</h2>
                 <p class="reading"><span id="valueContainer">NaN</span></p>
-                <p class="gray-label">Last reading: <span id="timestamp"></span></p>
             </div>
         </div>
 </body>
@@ -57,11 +57,14 @@
     var bleServiceFound;
     var sensorCharacteristicFound;
     //slider
-    var slider = document.getElementById("encoders_speed_range");
-    var output = document.getElementById("demo");
-    output.innerHTML = slider.value;
-    slider.oninput = function(){
-        output.innerHTML = this.value
+    const speedSlider = document.getElementById('speedSlider');
+    const speedValue = document.getElementById('speedValue');
+    const motorSpeed = document.getElementById('motorSpeed');
+    // output.innerHTML = slider.value;
+    speedSlider.oninput = function(){
+        speedValue.innerText = this.value;
+        sendSpeed(this.value);
+
     }
 
     // Connect Button
@@ -134,6 +137,13 @@
         bleStateContainer.innerHTML = "Device disconnected";
         bleStateContainer.style.color = "#d13a30";
         connectToDevice(); // Optional: auto-reconnect
+    }
+    //send speed
+    function sendSpeed(speed) {
+        if (writeCharacteristic) {
+            const data = new Uint8Array([parseInt(speed)]);
+            writeCharacteristic.writeValue(data);
+        }
     }
 
     // Handle notifications
