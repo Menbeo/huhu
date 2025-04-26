@@ -26,7 +26,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 .card {
-    background-color: pink;
+    background-image: linear-gradient(to bottom, #26b7cd, white);
     box-shadow: 2px 2px 12px 1px rgba(140,140,140,.5);
 }
 button {
