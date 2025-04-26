@@ -5,11 +5,11 @@ html {
 }
 h1 {
     font-size: 1.8rem;
-    color: red;
+    color: black;
 }
 .topnav {
     overflow: hidden;
-    background-color: #0A1128;
+    background-image: linear-gradient(to right, #191834, #2b2c68, #338aca, #26b7cd, #61bdaf);
 }
 body {
     margin: 0;
