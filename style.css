@@ -2,6 +2,7 @@ html {
     font-family: Arial, Helvetica, sans-serif;
     display: inline-block;
     text-align: center;
+    background-image: linear-gradient(to right, #191834, #2b2c68, #338aca, #26b7cd, #61bdaf);
 }
 h1 {
     font-size: 1.8rem;
@@ -9,11 +10,11 @@ h1 {
 }
 .topnav {
     overflow: hidden;
-    background-image: linear-gradient(to right, #191834, #2b2c68, #338aca, #26b7cd, #61bdaf);
+/*     background-image: linear-gradient(to right, #191834, #2b2c68, #338aca, #26b7cd, #61bdaf); */
 }
 body {
     margin: 0;
-    background-image: linear-gradient(to right, #191834, #2b2c68, #338aca, #26b7cd, #61bdaf);
+/*     background-image: linear-gradient(to right, #191834, #2b2c68, #338aca, #26b7cd, #61bdaf); */
 }
 .content {
     padding: 50px;
