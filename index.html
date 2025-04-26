@@ -17,6 +17,7 @@
         <div class="card-grid ">
             <div class = "slidecontainter">
                 <h2> Encoder controll </h2>
+                <p> Value: <span id = "demo"> </span></p>
                 <input type ="range" min="0" max = "255" id = "encoders_speed_range">
             </div>
         </div>
@@ -51,12 +52,13 @@
     var bleServiceFound;
     var sensorCharacteristicFound;
     //slider
-    function updateSliderValue() {
-      var slider = document.getElementById("encoderSlider");
-      var output = document.getElementById("sliderValue");
-      output.textContent = slider.value;
+    var slider = document.getElementById("encoders_speed_range");
+    var output = document.getElementById("demo");
+    output.innerHTML = slider.value;
+    slider.oninput = function(){
+        output.innerHTML = this.value
     }
-
+    
 
     // Connect Button
     connectButton.addEventListener('click', () => {
