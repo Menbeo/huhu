@@ -21,7 +21,8 @@ body {
     padding: 50px;
 }
 .card-grid {
-    max-width: 800px;
+    width: auto;
+    height: auto;
     margin: 0 auto;
     margin-bottom: 30px;
     display: grid;
@@ -30,7 +31,7 @@ body {
 }
 .card {
      background-image: linear-gradient(to bottom, #26b7cd, #61bdaf);
-/*     box-shadow: 2px 2px 12px 1px rgba(140,140,140,.5); */
+    box-shadow: 2px 2px 12px 1px rgba(140,140,140,.5);
 }
 
 .slider{
@@ -39,7 +40,7 @@ body {
     margin-bottom: 1rem;
 }
 .slider:hover{
-    opacity:1'
+    opacity:1;
 }
     
 button {
