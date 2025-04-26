@@ -22,8 +22,8 @@ body {
 }
 .card-grid {
     width: 700px;
-    margin: 0px;
-    margin-bottom: 30px;
+    margin: 0 auto 30px auto;
+    justify-content: center;
     display: grid;
     grid-gap: 2rem;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
