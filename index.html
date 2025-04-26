@@ -13,26 +13,16 @@
         <h3> made by: group Meo </h3>
     </div>
     <div class="content">
+        <p class="gray-label">BLE state: <strong><span id="bleState" style="color:#d13a30;">Disconnected</span></strong></p>
         <div class="card-grid ">
-            <div class="card">
-                <p>
-                    <button id="connectBleButton" class="connectButton"> Connect to BLE Device</button>
-                    <button id="disconnectBleButton" class="disconnectButton"> Disconnect BLE Device</button>
-                </p>
-                <p class="gray-label">BLE state: <strong><span id="bleState" style="color:#d13a30;">Disconnected</span></strong></p>
+            <div class = "slidecontainter">
+                <h2> Encoder controll </h2>
+                <input type ="range" min="0" max = "255">
             </div>
         </div>
         <div class="card-grid">
             <div class="card">
                 <h2>LED nè okilala</h2>
-                <p class="green-label">LED State: <span id="ledStateText">Unknown</span></p>
-            </div>
-
-            <div class="card">
-                <h2>Control GPIO 2</h2>
-                <button id="onButton" class="onButton">ON</button>
-                <button id="offButton" class="offButton">OFF</button>
-                <p class="blue-label">Last value sent: <span id="valueSent"></span></p>
                 <p class="green-label">LED State: <span id="ledStateText">Unknown</span></p>
             </div>
         </div>
