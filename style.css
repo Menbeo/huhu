@@ -22,10 +22,10 @@ body {
 }
 .card-grid {
     width: 700px;
-    align-items: center;
-    margin: 20px;
+    margin: 0px;
+    margin-bottom: 30px;
     display: grid;
-    gap: 20px;
+    grid-gap: 2rem;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 .card {
