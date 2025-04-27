@@ -67,12 +67,12 @@
     const speedValue = document.getElementById('speedValue');
     const motorSpeed = document.getElementById('motorSpeed');
     // output.innerHTML = slider.value;
-    speedSlider.oninput = function(){
-        speedValue.innerText = this.value;
-        sendSpeed(this.value);
-
-    }
-
+    speedSlider.addEventListener('input', function() {
+      const speed = parseInt(speedSlider.value);
+      speedValue.textContent = speed;
+      sendSpeed(speed);
+    });
+    
     // Connect Button
     connectButton.addEventListener('click', () => {
         if (isWebBluetoothEnabled()) {
@@ -144,12 +144,49 @@
         bleStateContainer.style.color = "#d13a30";
         connectToDevice(); // Optional: auto-reconnect
     }
+    var writeCharacteristic;
     //send speed
     function sendSpeed(speed) {
         if (writeCharacteristic) {
             const data = new Uint8Array([parseInt(speed)]);
             writeCharacteristic.writeValue(data);
         }
+    }
+    function handleSensorValueChanged(event) {
+      const value = event.target.value;
+      const decoder = new TextDecoder('utf-8');
+      const speedText = decoder.decode(value);
+      console.log('Received speed:', speedText);
+      motorStateText.textContent = `Motor Speed: ${speedText}`;
+    }
+      async function connect() {
+      try {
+        device = await navigator.bluetooth.requestDevice({
+          filters: [{ name: 'Huhu' }],
+          optionalServices: [serviceUuid]
+        });
+
+        server = await device.gatt.connect();
+        const service = await server.getPrimaryService(serviceUuid);
+
+        const characteristics = await Promise.all([
+          service.getCharacteristic(sensorCharacteristicUuid),
+          service.getCharacteristic(motorControlCharacteristicUuid)
+        ]);
+
+        sensorCharacteristic = characteristics[0];
+        motorControlCharacteristic = characteristics[1];
+
+        sensorCharacteristic.addEventListener('characteristicvaluechanged', handleSensorValueChanged);
+        await sensorCharacteristic.startNotifications();
+        await sensorCharacteristic.readValue();
+
+        controlsDiv.style.display = 'block';
+        motorStateText.textContent = 'Connected';
+        console.log('Connected to ESP32 BLE');
+      } catch (error) {
+        console.error('Error connecting to ESP32: ', error);
+      }
     }
 
     // Handle notifications
