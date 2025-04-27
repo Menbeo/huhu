@@ -68,19 +68,21 @@ button {
 } */
 
 .connectButton{
-    background-color: #f7d1d8;
+    background: #f7d1d8;
+    padding: 10px;
 }
 .connectButton:hover{
-    transform: translateY(-4px);
+/*     transform: translateY(-4px); */
     background: linear-gradient(to bottom right, #f4bbc9);
 }
 
 .disconnectButton{
-    background-color: #7ea83d;
+    background: #7ea83d;
+    padding: 10px;
 }
 
-.connectButton:hover{
-    transform: translateY(-4px);
+.disconnectButton:hover{
+/*     transform: translateY(-4px); */
     background: linear-gradient(to bottom right, #68a042);
 }
 
