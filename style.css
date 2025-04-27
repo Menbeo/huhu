@@ -50,7 +50,6 @@ body {
 }
     
 button {
-    color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -58,20 +57,31 @@ button {
     border-radius: 4px;
 }
 
-.onButton{
-    background-color: #1b8a94;
+/* .onButton{
+    background-color:  #f7d1d8;
 }
+
+    
 
 .offButton{
     background-color: #5f6c6d;
-}
+} */
 
 .connectButton{
-    background-color: #24af37;
+    background-color: #f7d1d8;
+}
+.connectButton:hover{
+    transform: translateY(-4px);
+    background: linear-gradient(to bottom right, #f4bbc9);
 }
 
 .disconnectButton{
-    background-color: #d13a30;
+    background-color: #7ea83d;
+}
+
+.connectButton:hover{
+    transform: translateY(-4px);
+    background: linear-gradient(to bottom right, #68a042);
 }
 
 .gray-label {
