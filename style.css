@@ -70,20 +70,24 @@ button {
 .connectButton{
     background: #f7d1d8;
     padding: 10px;
+    border-radius:10px;
+    transition: background 0.3s ease, transform 0.3s ease;
 }
 .connectButton:hover{
 /*     transform: translateY(-4px); */
-    background: linear-gradient(to bottom right, #f4bbc9);
+    background: linear-gradient(to bottom right, #f4bbc9,#f7d1d8);
 }
 
 .disconnectButton{
     background: #7ea83d;
     padding: 10px;
+    border-radius:10px;
+    transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .disconnectButton:hover{
 /*     transform: translateY(-4px); */
-    background: linear-gradient(to bottom right, #68a042);
+    background: linear-gradient(to bottom right, #68a042, #7ea83d);
 }
 
 .gray-label {
