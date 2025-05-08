@@ -122,18 +122,21 @@
         .then(service => {
             bleServiceFound = service;
            return Promise.all([
-                service.getCharacteristic(motorControlCharacteristic),
-                service.getCharacteristic(motorSpeedCharacteristic)
+                service.getCharacteristic(sensorCharacteristic),
+                service.getCharacteristic(ledCharacteristic)
             ]);
         })
-        .then(characteristic => {
-            motorControlCharacteristicFound = characteristics[0];
-            motorSpeedCharacteristicFound = characteristics[1];
-            motorSpeedCharacteristicFound.addEventListener('characteristicvaluechanged', handleMotorSpeedChange);
+        .then(characteristics => {
+            sensorControlCharacteristicFound = characteristics[0];
+            ledCharacteristicFound = characteristics[1];
+            sensorCharacteristicFound.addEventListener('characteristicvaluechanged', handleMotorSpeedChange);
             // sensorCharacteristicFound = characteristic;
             // characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
             // characteristic.startNotifications();
-            return motorSpeedCharacteristicFound.startNotifications();
+            return sensorSpeedCharacteristicFound.startNotifications();
+        })
+        .then(() => {
+                return sensorCharacteristicFound.readValue(); // Read initial value
         })
             
         // .then(value => {
@@ -159,7 +162,7 @@
     // var writeCharacteristic;
     //send speed
     function sendSpeed(speed) {
-        if (bleServer && bleServer.connected && motorControlCharacteristicFound) {
+        if (bleServer && bleServer.connected && ledCharacteristicFound) {
             const data = new Uint8Array([speed]);
             motorControlCharacteristicFound.writeValue(data)
             .then(() => {
@@ -174,9 +177,11 @@
     }
     function handleMotorSpeedChange(event) {
         const value = event.target.value;
-        const speed = value.getUint8(0); // Assuming speed is sent as a single byte
-        currentSpeedValue.textContent = speed;
-        console.log('Current motor speed received:', speed);
+        const speed = new TextDecoder('utf-8'); // Assuming speed is sent as a single byte
+        const speedText = decoder.decode(value);    // Get the string
+        console.log('Received speed:', speedText);
+        // currentSpeedValue.textContent = speed;
+        retrievedValue.textContent = speedText;
     }
     // function handleSensorValueChanged(event) {
     //   const value = event.target.value;
