@@ -150,7 +150,8 @@
     //send speed
     function sendSpeed(speed) {
         if (writeCharacteristic) {
-            const data = new Uint8Array([parseInt(speed)]);
+            const encoder = new TextEncoder();
+            const data = encoder.encode(speed.toString());
             writeCharacteristic.writeValue(data);
         }
     }
