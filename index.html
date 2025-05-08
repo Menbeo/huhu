@@ -129,18 +129,15 @@
             characteristic.startNotifications();
             return characteristic.readValue();
         })
+     
         .then(value => {
             const decodedValue = new TextDecoder().decode(value);
             console.log("Decoded value:", decodedValue);
-            const rpmDisplay = document.getElementById("valueContainer");;
+            const rpmDisplay = document.getElementById("valueContainer");
             if (rpmDisplay) rpmDisplay.innerHTML = decodedValue;
-            return bleServiceFound.getCharacteristic(ledCharacteristic); 
             // if (retrievedValue) retrievedValue.innerHTML = decodedValue;
-            // readLedState(); // Read initial LED state on connect
+            readLedState(); // Read initial LED state on connect
         })
-        .then(characteristic => {
-            writeCharacteristic = characteristic;
-        });
         .catch(error => {
             console.log('Error:', error);
         });
@@ -157,8 +154,7 @@
     //send speed
     function sendSpeed(speed) {
         if (writeCharacteristic) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(speed.toString());
+            const data = new Uint8Array([parseInt(speed)]);
             writeCharacteristic.writeValue(data);
         }
     }
@@ -217,7 +213,7 @@
             .then(() => {
                 latestValueSent.innerHTML = value;
                 readLedState(); // Update LED state after writing
-            });
+            })
             .catch(error => {
                 console.error("Write error:", error);
             });
