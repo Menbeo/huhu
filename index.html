@@ -66,10 +66,10 @@
     const speedSlider = document.getElementById('speedSlider');
     const speedValue = document.getElementById('speedValue');
     const motorSpeed = document.getElementById('motorSpeed');
-    output.innerHTML = slider.value;
-    slider.oninput = function(){
-        output.innerHTML = this.value
-    }
+    // output.innerHTML = slider.value;
+    // slider.oninput = function(){
+    //     output.innerHTML = this.value
+    // }
     speedSlider.addEventListener('input', function() {
       const speed = parseInt(speedSlider.value);
       speedValue.textContent = speed;
@@ -132,15 +132,15 @@
         .then(value => {
             const decodedValue = new TextDecoder().decode(value);
             console.log("Decoded value:", decodedValue);
-            const rpmDisplay = document.getElementById("valueContainer").textContent = speedText;;
+            const rpmDisplay = document.getElementById("valueContainer");;
             if (rpmDisplay) rpmDisplay.innerHTML = decodedValue;
-            // return bleServiceFound.getCharacteristic(ledCharacteristic); 
+            return bleServiceFound.getCharacteristic(ledCharacteristic); 
             // if (retrievedValue) retrievedValue.innerHTML = decodedValue;
             // readLedState(); // Read initial LED state on connect
         })
-        // // .then(characteristic => {
-        // //     writeCharacteristic = characteristic;
-        // });
+        .then(characteristic => {
+            writeCharacteristic = characteristic;
+        });
         .catch(error => {
             console.log('Error:', error);
         });
