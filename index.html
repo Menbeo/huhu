@@ -66,7 +66,10 @@
     const speedSlider = document.getElementById('speedSlider');
     const speedValue = document.getElementById('speedValue');
     const motorSpeed = document.getElementById('motorSpeed');
-    // output.innerHTML = slider.value;
+    output.innerHTML = slider.value;
+    slider.oninput = function(){
+        output.innerHTML = this.value
+    }
     speedSlider.addEventListener('input', function() {
       const speed = parseInt(speedSlider.value);
       speedValue.textContent = speed;
