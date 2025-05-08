@@ -138,9 +138,9 @@
             // if (retrievedValue) retrievedValue.innerHTML = decodedValue;
             // readLedState(); // Read initial LED state on connect
         })
-        .then(characteristic => {
-            writeCharacteristic = characteristic;
-        });
+        // // .then(characteristic => {
+        // //     writeCharacteristic = characteristic;
+        // });
         .catch(error => {
             console.log('Error:', error);
         });
