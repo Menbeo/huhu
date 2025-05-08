@@ -124,20 +124,23 @@
             return service.getCharacteristic(sensorCharacteristic);
         })
         .then(characteristic => {
-            sensorCharacteristicFound = characteristic;
-            characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
-            characteristic.startNotifications();
-            return characteristic.readValue();
+            motorControlCharacteristicFound = characteristics[0];
+            motorSpeedCharacteristicFound = characteristics[1];
+            motorSpeedCharacteristicFound.addEventListener('characteristicvaluechanged', handleMotorSpeedChange);
+            // sensorCharacteristicFound = characteristic;
+            // characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
+            // characteristic.startNotifications();
+            return motorSpeedCharacteristicFound.startNotifications();
         })
-     
-        .then(value => {
-            const decodedValue = new TextDecoder().decode(value);
-            console.log("Decoded value:", decodedValue);
-            const rpmDisplay = document.getElementById("valueContainer");
-            if (rpmDisplay) rpmDisplay.innerHTML = decodedValue;
-            // if (retrievedValue) retrievedValue.innerHTML = decodedValue;
-            readLedState(); // Read initial LED state on connect
-        })
+            
+        // .then(value => {
+        //     const decodedValue = new TextDecoder().decode(value);
+        //     console.log("Decoded value:", decodedValue);
+        //     const rpmDisplay = document.getElementById("valueContainer");
+        //     if (rpmDisplay) rpmDisplay.innerHTML = decodedValue;
+        //     // if (retrievedValue) retrievedValue.innerHTML = decodedValue;
+        //     readLedState(); // Read initial LED state on connect
+        // })
         .catch(error => {
             console.log('Error:', error);
         });
@@ -150,21 +153,35 @@
         bleStateContainer.style.color = "#d13a30";
         connectToDevice(); // Optional: auto-reconnect
     }
-    var writeCharacteristic;
+    // var writeCharacteristic;
     //send speed
     function sendSpeed(speed) {
-        if (writeCharacteristic) {
-            const data = new Uint8Array([parseInt(speed)]);
-            writeCharacteristic.writeValue(data);
+        if (bleServer && bleServer.connected && motorControlCharacteristicFound) {
+            const data = new Uint8Array([speed]);
+            motorControlCharacteristicFound.writeValue(data)
+            .then(() => {
+                console.log('Motor speed sent:', speed);
+            })
+            .catch(error => {
+                console.error('Error sending motor speed:', error);
+            });
+        } else {
+            console.log('Not connected to BLE device or motor control characteristic not found.');
         }
     }
-    function handleSensorValueChanged(event) {
-      const value = event.target.value;
-      const decoder = new TextDecoder('utf-8');
-      const speedText = decoder.decode(value);
-      console.log('Received speed:', speedText);
-      motorStateText.textContent = `Motor Speed: ${speedText}`;
+    function handleMotorSpeedChange(event) {
+        const value = event.target.value;
+        const speed = value.getUint8(0); // Assuming speed is sent as a single byte
+        currentSpeedValue.textContent = speed;
+        console.log('Current motor speed received:', speed);
     }
+    // function handleSensorValueChanged(event) {
+    //   const value = event.target.value;
+    //   const decoder = new TextDecoder('utf-8');
+    //   const speedText = decoder.decode(value);
+    //   console.log('Received speed:', speedText);
+    //   motorStateText.textContent = `Motor Speed: ${speedText}`;
+    // }
       async function connect() {
       try {
         device = await navigator.bluetooth.requestDevice({
