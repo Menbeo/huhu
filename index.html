@@ -131,7 +131,7 @@
             console.log("Decoded value:", decodedValue);
             const rpmDisplay = document.getElementById("valueContainer").textContent = speedText;;
             if (rpmDisplay) rpmDisplay.innerHTML = decodedValue;
-            return bleServiceFound.getCharacteristic(ledCharacteristic); 
+            // return bleServiceFound.getCharacteristic(ledCharacteristic); 
             // if (retrievedValue) retrievedValue.innerHTML = decodedValue;
             // readLedState(); // Read initial LED state on connect
         })
