@@ -177,7 +177,7 @@
     }
     function handleMotorSpeedChange(event) {
         const value = event.target.value;
-        const speed = new TextDecoder('utf-8'); // Assuming speed is sent as a single byte
+        const decoder = new TextDecoder('utf-8'); // Assuming speed is sent as a single byte
         const speedText = decoder.decode(value);    // Get the string
         console.log('Received speed:', speedText);
         // currentSpeedValue.textContent = speed;
