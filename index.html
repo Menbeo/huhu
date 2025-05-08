@@ -121,7 +121,10 @@
         })
         .then(service => {
             bleServiceFound = service;
-            return service.getCharacteristic(sensorCharacteristic);
+           return Promise.all([
+                service.getCharacteristic(motorControlCharacteristic),
+                service.getCharacteristic(motorSpeedCharacteristic)
+            ]);
         })
         .then(characteristic => {
             motorControlCharacteristicFound = characteristics[0];
