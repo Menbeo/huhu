@@ -31,7 +31,7 @@
             <div class="card">
                 <h2> Encoder controll </h2>
                 <input type ="range" min="0" max = "255" id = "speedSlider">
-                <p>Speed: <span id="speedValue">150</span></p>
+                <p>Speed: <span id="speedValue">0</span></p>
             </div>
             
             <div class="card">
@@ -129,11 +129,15 @@
         .then(value => {
             const decodedValue = new TextDecoder().decode(value);
             console.log("Decoded value:", decodedValue);
-            const rpmDisplay = document.getElementById("valueContainer");
-            if (rpmDisplay) rpmDisplay.innerHTML = decodedValue;
+            const rpmDisplay = document.getElementById("valueContainer").textContent = speedText;;
+            // if (rpmDisplay) rpmDisplay.innerHTML = decodedValue;
+            return bleServiceFound.getCharacteristic(ledCharacteristic); 
             // if (retrievedValue) retrievedValue.innerHTML = decodedValue;
-            readLedState(); // Read initial LED state on connect
+            // readLedState(); // Read initial LED state on connect
         })
+        .then(characteristic => {
+            writeCharacteristic = characteristic;
+        });
         .catch(error => {
             console.log('Error:', error);
         });
@@ -210,7 +214,7 @@
             .then(() => {
                 latestValueSent.innerHTML = value;
                 readLedState(); // Update LED state after writing
-            })
+            });
             .catch(error => {
                 console.error("Write error:", error);
             });
