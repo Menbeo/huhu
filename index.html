@@ -45,8 +45,8 @@
     // DOM Elements
     const connectButton = document.getElementById('connectBleButton');
     const disconnectButton = document.getElementById('disconnectBleButton');
-    const onButton = document.getElementById('onButton');
-    const offButton = document.getElementById('offButton');
+    // const onButton = document.getElementById('onButton');
+    // const offButton = document.getElementById('offButton');
     const retrievedValue = document.getElementById('valueContainer');
     const latestValueSent = document.getElementById('valueSent');
     const bleStateContainer = document.getElementById('bleState');
@@ -133,7 +133,7 @@
             // sensorCharacteristicFound = characteristic;
             // characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
             // characteristic.startNotifications();
-            return sensorSpeedCharacteristicFound.startNotifications();
+            return sensorCharacteristicFound.startNotifications();
         })
         .then(() => {
                 return sensorCharacteristicFound.readValue(); // Read initial value
@@ -164,7 +164,7 @@
     function sendSpeed(speed) {
         if (bleServer && bleServer.connected && ledCharacteristicFound) {
             const data = new Uint8Array([speed]);
-            motorControlCharacteristicFound.writeValue(data)
+            ledCharacteristicFound.writeValue(data)
             .then(() => {
                 console.log('Motor speed sent:', speed);
             })
