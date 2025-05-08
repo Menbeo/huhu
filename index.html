@@ -129,7 +129,9 @@
         .then(value => {
             const decodedValue = new TextDecoder().decode(value);
             console.log("Decoded value:", decodedValue);
-            if (retrievedValue) retrievedValue.innerHTML = decodedValue;
+            const rpmDisplay = document.getElementById("valueContainer");
+            if (rpmDisplay) rpmDisplay.innerHTML = decodedValue;
+            // if (retrievedValue) retrievedValue.innerHTML = decodedValue;
             readLedState(); // Read initial LED state on connect
         })
         .catch(error => {
