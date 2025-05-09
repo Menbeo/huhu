@@ -127,7 +127,8 @@
         async function sendSpeed(speed) {
             if (bleServer && bleServer.connected && ledCharacteristicFound) {
                 try {
-                    const data = new Uint8Array([speed]);
+                    const speedString = String(speed);
+                    const data = new TextEncoder().encode(SpeedString);
                     await ledCharacteristicFound.writeValueWithoutResponse(data);
                     console.log('Motor speed sent:', speed);
                 } catch (error) {
