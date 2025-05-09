@@ -125,9 +125,9 @@
             characteristic.startNotifications();
             // return sensorCharacteristicFound.startNotifications();
         })
-        .then(() => {
-                return sensorCharacteristicFound.readValue(); // Read initial value
-        })
+        // .then(() => {
+        //         return sensorCharacteristicFound.readValue(); // Read initial value
+        // })
             
         .then(value => {
             const decodedValue = new TextDecoder().decode(value);
