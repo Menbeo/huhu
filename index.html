@@ -163,7 +163,9 @@
     //send speed
     function sendSpeed(speed) {
         if (bleServer && bleServer.connected && ledCharacteristicFound) {
-            const data = new Uint8Array([speed]);
+            const speedString = speed.toString();
+            const encoder = new TextEncoder();
+            const data = encoder.encode(speedString);
             ledCharacteristicFound.writeValue(data)
             .then(() => {
                 console.log('Motor speed sent:', speed);
