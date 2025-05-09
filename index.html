@@ -36,7 +36,7 @@
             
             <div class="card">
                 <h2>Motor Current speed</h2>
-                <p class="reading"><span id="valueContainer">NaN</span></p>
+                <p class="reading"><span id="valueContainer">0.00</span></p>
             </div>
         </div>
 </body>
@@ -47,7 +47,7 @@
     const disconnectButton = document.getElementById('disconnectBleButton');
     // const onButton = document.getElementById('onButton');
     // const offButton = document.getElementById('offButton');
-    const retrievedValue = document.getElementById('valueContainer');
+    // const retrievedValue = document.getElementById('valueContainer');
     const latestValueSent = document.getElementById('valueSent');
     const bleStateContainer = document.getElementById('bleState');
     const ledStateText = document.getElementById('ledStateText');
@@ -183,13 +183,11 @@
         // currentSpeedValue.textContent = speed;
         retrievedValue.textContent = speedText;
     }
-    // function handleSensorValueChanged(event) {
-    //   const value = event.target.value;
-    //   const decoder = new TextDecoder('utf-8');
-    //   const speedText = decoder.decode(value);
-    //   console.log('Received speed:', speedText);
-    //   motorStateText.textContent = `Motor Speed: ${speedText}`;
-    // }
+    function handleSensorValueChanged(event) {
+      const value = event.target.value;
+      const speed = value.getUint8(0);
+      document.getElementById('valueContainer').textContent = speed;;
+    }
       async function connect() {
       try {
         device = await navigator.bluetooth.requestDevice({
