@@ -114,13 +114,11 @@
             sensorCharacteristicFound.addEventListener('characteristicvaluechanged', handleMotorSpeedChange);
             // sensorCharacteristicFound = characteristic;
             // characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
-            await sensorCharacteristicFound .startNotifications();
-            await sensorCharacteristicFound.readValue();
-            // return sensorCharacteristicFound.startNotifications();
+            return sensorCharacteristicFound.startNotifications();
         })
-        // .then(() => {
-        //         return sensorCharacteristicFound.readValue(); // Read initial value
-        // })
+        .then(() => {
+                return sensorCharacteristicFound.readValue(); // Read initial value
+        })
             
         .then(value => {
             const decodedValue = new TextDecoder().decode(value);
