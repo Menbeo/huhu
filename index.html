@@ -19,14 +19,6 @@
            </p>
         </div>
     </div>
-<!--     <div class="content">
-        <div class="card-grid">
-            <div class = "card">
-                <h2> Encoder controll </h2>
-                <p> Value: <span id = "demo"> </span></p>
-                <input type ="range" min="0" max = "255" id = "encoders_speed_range">
-            </div>
-        </div> -->
         <div class="card-grid">
             <div class="card">
                 <h2> Encoder controll </h2>
@@ -117,12 +109,13 @@
             ]);
         })
         .then(characteristics => {
-            sensorControlCharacteristicFound = characteristics[0];
+            sensorCharacteristicFound = characteristics[0];
             ledCharacteristicFound = characteristics[1];
             sensorCharacteristicFound.addEventListener('characteristicvaluechanged', handleMotorSpeedChange);
-            sensorCharacteristicFound = characteristic;
+            // sensorCharacteristicFound = characteristic;
             // characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
-            characteristic.startNotifications();
+            await sensorCharacteristicFound .startNotifications();
+            await sensorCharacteristicFound.readValue();
             // return sensorCharacteristicFound.startNotifications();
         })
         // .then(() => {
