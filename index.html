@@ -45,8 +45,6 @@
     // DOM Elements
     const connectButton = document.getElementById('connectBleButton');
     const disconnectButton = document.getElementById('disconnectBleButton');
-    // const onButton = document.getElementById('onButton');
-    // const offButton = document.getElementById('offButton');
     const retrievedValue = document.getElementById('valueContainer');
     const latestValueSent = document.getElementById('valueSent');
     const bleStateContainer = document.getElementById('bleState');
@@ -65,11 +63,7 @@
     //slider
     const speedSlider = document.getElementById('speedSlider');
     const speedValue = document.getElementById('speedValue');
-    const motorSpeed = document.getElementById('motorSpeed');
-    // output.innerHTML = slider.value;
-    // slider.oninput = function(){
-    //     output.innerHTML = this.value
-    // }
+
     speedSlider.addEventListener('input', function() {
       const speed = parseInt(speedSlider.value);
       speedValue.textContent = speed;
@@ -85,10 +79,6 @@
 
     // Disconnect Button
     disconnectButton.addEventListener('click', disconnectDevice);
-
-    // // Write to the ESP32 LED Characteristic
-    // onButton.addEventListener('click', () => writeOnCharacteristic(1));
-    // offButton.addEventListener('click', () => writeOnCharacteristic(0));
 
     // Check if BLE is available
     function isWebBluetoothEnabled() {
@@ -144,8 +134,7 @@
             console.log("Decoded value:", decodedValue);
             const rpmDisplay = document.getElementById("valueContainer");
             if (rpmDisplay) rpmDisplay.innerHTML = decodedValue;
-            // if (retrievedValue) retrievedValue.innerHTML = decodedValue;
-            readLedState(); // Read initial LED state on connect
+          
         })
         .catch(error => {
             console.log('Error:', error);
@@ -159,7 +148,7 @@
         bleStateContainer.style.color = "#d13a30";
         connectToDevice(); // Optional: auto-reconnect
     }
-    // var writeCharacteristic;
+
     //send speed
     function sendSpeed(speed) {
         if (bleServer && bleServer.connected && ledCharacteristicFound) {
@@ -178,18 +167,15 @@
         }
     }
     function handleMotorSpeedChange(event) {
+        console.log("handleMotorSpeedChange called");
         const value = event.target.value;
         const decoder = new TextDecoder('utf-8'); // Assuming speed is sent as a single byte
         const speedText = decoder.decode(value);    // Get the string
         console.log('Received speed:', speedText);
-        // currentSpeedValue.textContent = speed;
+        // currentSpeedaValue.textContent = speed;
         retrievedValue.textContent = speedText;
     }
-    // function handleSensorValueChanged(event) {
-    //   const value = event.target.value;
-    //   const speed = value.getUint8(0);
-    //   document.getElementById('valueContainer').textContent = speed;;
-    // }
+
       async function connect() {
       try {
         device = await navigator.bluetooth.requestDevice({
@@ -245,20 +231,6 @@
         } else {
             alert("Bluetooth is not connected. Please connect first!");
         }
-    }
-
-    // Read current LED state
-    function readLedState() {
-        bleServiceFound.getCharacteristic(ledCharacteristic)
-        .then(characteristic => characteristic.readValue())
-        .then(value => {
-            const state = value.getUint8(0);
-            ledStateText.innerHTML = state === 1 ? "ON" : "OFF";
-            ledStateText.style.color = state === 1 ? "#24af37" : "#d13a30";
-        })
-        .catch(error => {
-            console.error("Error reading LED state:", error);
-        });
     }
 
     // Disconnect BLE device
