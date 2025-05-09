@@ -120,10 +120,10 @@
             sensorControlCharacteristicFound = characteristics[0];
             ledCharacteristicFound = characteristics[1];
             sensorCharacteristicFound.addEventListener('characteristicvaluechanged', handleMotorSpeedChange);
-            // sensorCharacteristicFound = characteristic;
+            sensorCharacteristicFound = characteristic;
             // characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
-            // characteristic.startNotifications();
-            return sensorCharacteristicFound.startNotifications();
+            characteristic.startNotifications();
+            // return sensorCharacteristicFound.startNotifications();
         })
         .then(() => {
                 return sensorCharacteristicFound.readValue(); // Read initial value
