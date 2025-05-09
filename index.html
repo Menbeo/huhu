@@ -83,7 +83,7 @@
         }
 
         // Connect to BLE Device
-        async function connectToDevice() {
+        function connectToDevice() {
             console.log('Initializing Bluetooth...');
             try {
                 const device = await navigator.bluetooth.requestDevice({
