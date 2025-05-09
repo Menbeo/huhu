@@ -1,1 +1,1 @@
-STA 
+STA - Courses - Individual 
