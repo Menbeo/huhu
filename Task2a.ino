@@ -1,13 +1,13 @@
 // ESP32 code for manual wheel rotation to count encoder pulses
 
-// L298N Pins (motor kept off)
-#define IN1 25        // Motor direction pin 1
-#define IN2 33        // Motor direction pin 2
-#define ENA 15        // PWM pin for speed control
+// Motor A pins
+const int IN1 = 17;
+const int IN2 = 5;
+const int ENA = 16; // PWM pin
 
-// Encoder Pins
-#define ENCODER_A 12  // Encoder channel A
-#define ENCODER_B 13  // Encoder channel B
+// Encoder pins
+const int ENCODER_A = 12;
+const int ENCODER_B = 13;
 
 // Encoder Parameters
 #define PPR 100       // Pulses per revolution per channel (adjust based on encoder)
