@@ -9,12 +9,12 @@ const int encoderB= 13;
 
 
 // Encoder setup
-volatile int encoderCount = 0; // Counts encoder pulses
+volatile int encoderCount = 0; 
 const int pulsesPerRevolution = 235; // 
 // Speed setup
-const float targetRPM = 150.0; // Want 150 RPM
-const int basePWM = (150.0 / 280.0) * 255; // Base speed (~137)
-const float Kp = 1.0; // PID adjustment (tune this)
+const float targetRPM = 150.0; 
+const int basePWM = (150.0 / 280.0) * 255; 
+const float Kp = 1.0; 
 
 
 // Variables
