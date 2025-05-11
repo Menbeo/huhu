@@ -2,7 +2,8 @@ html {
     font-family: Trebuchet MS, sans-serif;
     display: inline-block;
     text-align: center;
-    background-image: linear-gradient(to right, #191834, #2b2c68, #338aca, #26b7cd, #61bdaf);
+    background-color: white
+/*     background-image: linear-gradient(to right, #191834, #2b2c68, #338aca, #26b7cd, #61bdaf); */
 }
 h1 {
     font-size: 1.8rem;
