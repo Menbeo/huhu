@@ -10,7 +10,7 @@ const int ENCODER_A = 12;
 const int ENCODER_B = 13;
 
 // Encoder Parameters
-#define PPR 100       // Pulses per revolution per channel (adjust based on encoder)
+#define PPR 235       // Pulses per revolution per channel (adjust based on encoder)
 #define PULSES_PER_REV (PPR * 4)  // Total pulses in CHANGE mode (4x resolution)
 #define DEBOUNCE_TIME 2000  // Debounce time in microseconds
 
