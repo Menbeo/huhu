@@ -3,7 +3,7 @@ html {
     display: inline-block;
     text-align: center;
 /*     background-color: white */
-/*     background-image: linear-gradient(to right, #191834, #2b2c68, #338aca, #26b7cd, #61bdaf); */
+    background-image: linear-gradient(to right, #a1c4fd, #c2e9fb, #d4fc79, #96e6a1, #fbc2eb);
 }
 h1 {
     font-size: 1.8rem;
@@ -30,7 +30,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 .card {
-/*     background-image: linear-gradient(to bottom right, white, #26b7cd); */
+    background-image: linear-gradient(to right, #a1c4fd, #c2e9fb, #d4fc79, #96e6a1, #fbc2eb);
     box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
     padding:20px;
     border-radius: 10px;
