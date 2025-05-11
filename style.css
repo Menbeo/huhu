@@ -3,8 +3,8 @@ html {
     display: inline-block;
     text-align: center;
 /*     background-color: white */
-/*     background-image: linear-gradient(to right, #191834, #2b2c68, #338aca, #26b7cd, #61bdaf); */
-    background-image: linear-gradient(to right, #a1c4fd, #c2e9fb, #d4fc79, #96e6a1, #fbc2eb);
+    background-image: linear-gradient(to right, #191834, #2b2c68, #338aca, #26b7cd, #61bdaf);
+/*     background-image: linear-gradient(to right, #a1c4fd, #c2e9fb, #d4fc79, #96e6a1, #fbc2eb); */
 
 }
 h1 {
@@ -32,13 +32,13 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 .card {
-/*     background-image: linear-gradient(to right, #191834, #2b2c68, #338aca, #26b7cd, #61bdaf); */
+    background-image: linear-gradient(to right, #191834, #2b2c68, #338aca, #26b7cd, #61bdaf);
     box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
     padding:20px;
     border-radius: 10px;
     transition: background 0.5s ease, transform 0.3s ease;
 }
-/* .card:hover{
+.card:hover{
     transform: translateY(-4px);
     background: linear-gradient(to bottom right, #74ebd5, #acb6e5); */
 }
