@@ -83,12 +83,16 @@ button {
     border-radius: 3px;
     transition: background 0.3s ease, transform 0.3s ease;
 }
-/* .Submit{
-    background: #f6a6bb;
-    padding: 10px;
-    border-radius: 3px;
-    transition: background 0.3s ease, transform 0.3s ease;
-} */
+
+.button_grid {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    justify-content: center;
+}
+
 .connectButton:hover{
     transform: translateY(-4px);
 /*     background: linear-gradient(to bottom right, #f4bbc9,#f7d1d8); */
