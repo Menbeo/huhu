@@ -143,7 +143,7 @@ button {
 }
 
 .submit-button {
- background-color: #007bff;
+ background-image:  linear-gradient(to right, #191834, #2b2c68, #338aca);
  color: white;
  padding: 10px 15px;
  border: none;
