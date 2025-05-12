@@ -84,7 +84,7 @@ button {
     transition: background 0.3s ease, transform 0.3s ease;
 }
 
-.button_grid {
+.button_grid{
     margin: 30px auto 30px auto;
     justify-content: center;
     display: grid;
