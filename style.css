@@ -59,7 +59,19 @@ button {
     cursor: pointer;
     border-radius: 4px;
 }
+.control-button{
+  padding: 15px 30px;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(to right, #1d1b59, #3277d6);
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s;
+  width: 250px;
+}
 
+    
 .speaker {
     margin-top: 20px;
 }
@@ -85,12 +97,12 @@ button {
 }
 
 .button_grid{
-    margin: 30px auto 30px auto;
-    justify-content: center;
-    display: grid;
-    grid-gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
 }
+
 
 .connectButton:hover{
     transform: translateY(-4px);
