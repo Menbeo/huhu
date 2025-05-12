@@ -64,7 +64,7 @@ button {
   font-size: 1.2em;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(to right, #1d1b59, #3277d6);
+  background-image: linear-gradient(to right, #191834, #2b2c68, #338aca);
   color: white;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s;
