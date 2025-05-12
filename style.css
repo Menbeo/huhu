@@ -61,15 +61,15 @@ button {
 }
 
 .runSpeechRecog(){
-     background-image: linear-gradient(to right, #191834, #2b2c68, #338aca);
-     color: white;
-     padding: 10px 15px;
-     border: none;
-     border-radius: 4px;
-     cursor: pointer;
-     font-size: 16px;
-     transition: background-image 0.3s ease;
-     width: 100%;
+ background-image: linear-gradient(to right, #191834, #2b2c68, #338aca);
+ color: white;
+ padding: 10px 15px;
+ border: none;
+ border-radius: 4px;
+ cursor: pointer;
+ font-size: 16px;
+ transition: background-image 0.3s ease;
+ width: 100%;
 }
 .runSpeechRecog():hover {
  background-color: #0056b3;
