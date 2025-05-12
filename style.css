@@ -59,19 +59,7 @@ button {
     cursor: pointer;
     border-radius: 4px;
 }
-.control-button{
-  padding: 15px 30px;
-  font-size: 1.2em;
-  border: none;
-  border-radius: 12px;
-  background-image: linear-gradient(to right, #191834, #2b2c68, #338aca);
-  cursor: pointer;
-  transition: background-image 0.3s ease, transform 0.2s;
-  width: 250px;
-}
-.control-button:hover {
-     background-color: #0056b3;
-}
+
     
 .speaker {
     margin-top: 20px;
