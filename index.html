@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>FINAL PROJECT GROUP MEO </title>
+    <title>FINAL PROJECT GROUP MEO</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -10,133 +10,183 @@
 <body>
     <div class="topnav">
         <h1>ESP32 CONTROL</h1>
-        <h3> made by: MEO </h3>
+        <h3>made by: MEO</h3>
         <p class="gray-label">BLE state: <strong><span id="bleState" style="color:#d13a30;">Disconnected</span></strong></p>
         <div>
-           <p>
-               <button id="connectBleButton" class="connectButton"> Connect to BLE Device</button>
-               <button id="disconnectBleButton" class="disconnectButton"> Disconnect BLE Device</button>
-           </p>
+            <p>
+                <button id="connectBleButton" class="connectButton">Connect to BLE Device</button>
+                <button id="disconnectBleButton" class="disconnectButton">Disconnect BLE Device</button>
+            </p>
         </div>
     </div>
-        <div class="card-grid">
-            <div class="card">
-                <h2> Encoder control</h2>
-                <input type ="range" min="0" max = "255" id = "speedSlider">
-                <p>Speed: <span id="speedValue">150</span></p>
-            </div>
-            
-            <div class="card">
-                <h2>Motor Current speed (RPM) </h2> 
-<!--               //I kinda think if showing the current speed then showing like this -->
-                <p class="reading"><span id="valueContainer">0.00</span></p>
-            </div>
 
-<!--             //kp ki kd -->
-            <div class = "card">
-<!--                 <div class="pid-control-card"> -->
-                    <h2>Kp, Ki, Kd modify</h2>
-                    <div class="input-group">
-                        <label for="kp">Kp:</label>
-                        <input type="number" id="kp" name="kp">
-                    </div>
-                    <div class="input-group">
-                        <label for="ki">Ki:</label>
-                        <input type="number" id="ki" name="ki">
-                    </div>
-                    <div class="input-group">
-                        <label for="kd">Kd:</label>
-                        <input type="number" id="kd" name="kd">
-                    </div>
-                    <button id="Submission" class="submit-button">Submit</button>
-<!--                 </div> -->
-            </div>
+    <div class="card-grid">
+        <div class="card">
+            <h2>Encoder control</h2>
+            <input type="range" min="0" max="255" id="speedSlider" value="150">
+            <p>Speed: <span id="speedValue">150</span></p>
+        </div>
 
-<!--             Text to speech -->
-            <div class = "card">
-                <h2>Voice - Control</h2>
-                <div class = "speaker"> 
-                        <p id = "action"></p>
-                        <button onclick = "runSpeechRecog()"> Speech </button>
-                </div>
-            </div>
+        <div class="card">
+            <h2>Motor Current Speed (RPM)</h2>
+            <p class="reading"><span id="valueContainer">0.00</span></p>
+        </div>
 
-<!--             Control Manual -->
-            <div class = "card">
-                <h2>Control Manual</h2>
-                <div class = "button-grid">
-                    <p>
-                        <button> left </button> 
-                        <button> right </button>
-                    </p>
-                    <p>
-                        <button> stop </button>
-                        <button> forward </button>
-                        <button>backward </button>
-                    </p>
-                </div>
-        </div>       
-</body>
+        <div class="card">
+            <h2>Kp, Ki, Kd modify</h2>
+            <div class="input-group">
+                <label for="kp">Kp:</label>
+                <input type="number" id="kp" name="kp">
+            </div>
+            <div class="input-group">
+                <label for="ki">Ki:</label>
+                <input type="number" id="ki" name="ki">
+            </div>
+            <div class="input-group">
+                <label for="kd">Kd:</label>
+                <input type="number" id="kd" name="kd">
+            </div>
+            <button id="Submission" class="submit-button">Submit</button>
+        </div>
+
+        <div class="card">
+            <h2>Voice - Control</h2>
+            <div class="speaker">
+                <p id="action"></p>
+                <button onclick="runSpeechRecog()">Speech</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Control Manual</h2>
+            <div class="button-grid">
+                <p>
+                    <button>left</button>
+                    <button>right</button>
+                </p>
+                <p>
+                    <button>stop</button>
+                    <button>forward</button>
+                    <button>backward</button>
+                </p>
+            </div>
+        </div>
+    </div>
 
 <script>
     // DOM Elements
     const connectButton = document.getElementById('connectBleButton');
     const disconnectButton = document.getElementById('disconnectBleButton');
     const retrievedValue = document.getElementById('valueContainer');
-    const latestValueSent = document.getElementById('valueSent');
     const bleStateContainer = document.getElementById('bleState');
-    const ledStateText = document.getElementById('ledStateText');
 
-    // Define BLE Device Specs
+    // BLE UUIDs and device name
     var deviceName = 'Huhu';
     var bleService = '19b10000-e8f2-537e-4f6c-d104768a1214';
     var ledCharacteristic = '19b10002-e8f2-537e-4f6c-d104768a1214';
     var sensorCharacteristic = '19b10001-e8f2-537e-4f6c-d104768a1214';
 
-    // Global Variables to Handle Bluetooth
+    // Global Variables
     var bleServer;
     var bleServiceFound;
+    var ledCharacteristicFound;
     var sensorCharacteristicFound;
-    //slider
-    const speedSlider = document.getElementById('speedSlider');
-    const speedValue = document.getElementById('speedValue');
 
-    speedSlider.addEventListener('input', function() {
-      const speed = parseInt(speedSlider.value);
-      speedValue.textContent = speed;
-      sendSpeed(speed);
-    });
-    
-    // Connect Button
-    connectButton.addEventListener('click', () => {
-        if (isWebBluetoothEnabled()) {
-            connectToDevice();
+    // Handle PID submission
+    document.getElementById('Submission').addEventListener('click', () => {
+        const kp = document.getElementById('kp').value;
+        const ki = document.getElementById('ki').value;
+        const kd = document.getElementById('kd').value;
+        const pidString = `PID:${kp},${ki},${kd}`;
+        console.log("Sending PID values:", pidString);
+
+        if (bleServer && bleServer.connected && ledCharacteristicFound) {
+            const encoder = new TextEncoder();
+            ledCharacteristicFound.writeValue(encoder.encode(pidString))
+                .then(() => console.log("PID values sent!"))
+                .catch(error => console.error("Error sending PID values:", error));
+        } else {
+            alert("Not connected to BLE device.");
         }
     });
 
-    // Disconnect Button
+    // Manual Control
+    document.querySelectorAll(".button-grid button").forEach(button => {
+        button.addEventListener('click', () => {
+            const command = button.innerText.trim().toLowerCase();
+            console.log("Manual control command:", command);
+            if (bleServer && bleServer.connected && ledCharacteristicFound) {
+                const encoder = new TextEncoder();
+                ledCharacteristicFound.writeValue(encoder.encode(command))
+                    .then(() => console.log("Command sent:", command))
+                    .catch(error => console.error("Error sending command:", error));
+            } else {
+                alert("Connect to BLE device first!");
+            }
+        });
+    });
+
+    // Voice Control
+    function runSpeechRecog() {
+        const action = document.getElementById("action");
+        var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = "en-US";
+        recognition.onstart = () => action.innerHTML = "Listening...";
+        recognition.onresult = event => {
+            const transcript = event.results[0][0].transcript.toLowerCase();
+            action.innerHTML = "You said: " + transcript;
+            if (bleServer && bleServer.connected && ledCharacteristicFound) {
+                const encoder = new TextEncoder();
+                ledCharacteristicFound.writeValue(encoder.encode(transcript))
+                    .then(() => console.log("Voice command sent:", transcript))
+                    .catch(err => console.error("Error sending voice command:", err));
+            }
+        };
+        recognition.onerror = err => action.innerHTML = "Error: " + err.error;
+        recognition.start();
+    }
+
+    // Speed control slider
+    const speedSlider = document.getElementById('speedSlider');
+    const speedValue = document.getElementById('speedValue');
+    speedSlider.addEventListener('input', function () {
+        const speed = parseInt(speedSlider.value);
+        speedValue.textContent = speed;
+        sendSpeed(speed);
+    });
+
+    function sendSpeed(speed) {
+        if (bleServer && bleServer.connected && ledCharacteristicFound) {
+            const encoder = new TextEncoder();
+            ledCharacteristicFound.writeValue(encoder.encode(speed.toString()))
+                .then(() => console.log("Motor speed sent:", speed))
+                .catch(error => console.error("Error sending speed:", error));
+        } else {
+            console.log("Not connected to BLE or characteristic not found.");
+        }
+    }
+
+    // BLE connection
+    connectButton.addEventListener('click', () => {
+        if (isWebBluetoothEnabled()) connectToDevice();
+    });
+
     disconnectButton.addEventListener('click', disconnectDevice);
 
-    // Check if BLE is available
     function isWebBluetoothEnabled() {
         if (!navigator.bluetooth) {
-            console.log('Web Bluetooth API is not available in this browser!');
             bleStateContainer.innerHTML = "Web Bluetooth API is not available!";
             return false;
         }
-        console.log('Web Bluetooth API supported in this browser.');
         return true;
     }
 
-    // Connect to BLE Device
     function connectToDevice() {
-        console.log('Initializing Bluetooth...');
         navigator.bluetooth.requestDevice({
             filters: [{ name: deviceName }],
             optionalServices: [bleService]
         })
         .then(device => {
-            console.log('Device Selected:', device.name);
             bleStateContainer.innerHTML = 'Connected to device ' + device.name;
             bleStateContainer.style.color = "#24af37";
             device.addEventListener('gattservicedisconnected', onDisconnected);
@@ -148,7 +198,7 @@
         })
         .then(service => {
             bleServiceFound = service;
-           return Promise.all([
+            return Promise.all([
                 service.getCharacteristic(sensorCharacteristic),
                 service.getCharacteristic(ledCharacteristic)
             ]);
@@ -157,137 +207,42 @@
             sensorCharacteristicFound = characteristics[0];
             ledCharacteristicFound = characteristics[1];
             sensorCharacteristicFound.addEventListener('characteristicvaluechanged', handleMotorSpeedChange);
-            // sensorCharacteristicFound = characteristic;
-            // characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicChange);
             return sensorCharacteristicFound.startNotifications();
         })
-        .then(() => {
-                return sensorCharacteristicFound.readValue(); // Read initial value
-        })
-            
+        .then(() => sensorCharacteristicFound.readValue())
         .then(value => {
             const decodedValue = new TextDecoder().decode(value);
             console.log("Decoded value:", decodedValue);
-            const rpmDisplay = document.getElementById("valueContainer");
-            if (rpmDisplay) rpmDisplay.innerHTML = decodedValue;
-          
+            retrievedValue.innerHTML = decodedValue;
         })
         .catch(error => {
             console.log('Error:', error);
         });
     }
 
-    // Handle device disconnection
+    function handleMotorSpeedChange(event) {
+        const value = event.target.value;
+        const decoder = new TextDecoder('utf-8');
+        const speedText = decoder.decode(value);
+        console.log('Received speed:', speedText);
+        retrievedValue.textContent = speedText;
+    }
+
+    function disconnectDevice() {
+        if (bleServer && bleServer.connected) {
+            bleServer.disconnect();
+            bleStateContainer.innerHTML = "Disconnected";
+            bleStateContainer.style.color = "#d13a30";
+        }
+    }
+
     function onDisconnected(event) {
         console.log('Device Disconnected:', event.target.device.name);
         bleStateContainer.innerHTML = "Device disconnected";
         bleStateContainer.style.color = "#d13a30";
-        connectToDevice(); // Optional: auto-reconnect
-    }
-
-    //send speed
-    function sendSpeed(speed) {
-        if (bleServer && bleServer.connected && ledCharacteristicFound) {
-            const speedString = speed.toString();
-            const encoder = new TextEncoder();
-            const data = encoder.encode(speedString);
-            ledCharacteristicFound.writeValue(data)
-            .then(() => {
-                console.log('Motor speed sent:', speed);
-            })
-            .catch(error => {
-                console.error('Error sending motor speed:', error);
-            });
-        } else {
-            console.log('Not connected to BLE device or motor control characteristic not found.');
-        }
-    }
-    function handleMotorSpeedChange(event) {
-        console.log("handleMotorSpeedChange called");
-        const value = event.target.value;
-        const decoder = new TextDecoder('utf-8'); // Assuming speed is sent as a single byte
-        const speedText = decoder.decode(value);    // Get the string
-        console.log('Received speed:', speedText);
-        // currentSpeedaValue.textContent = speed;
-        retrievedValue.textContent = speedText;
-    }
-
-      async function connect() {
-      try {
-        device = await navigator.bluetooth.requestDevice({
-          filters: [{ name: 'Huhu' }],
-          optionalServices: [serviceUuid]
-        });
-
-        server = await device.gatt.connect();
-        const service = await server.getPrimaryService(serviceUuid);
-
-        const characteristics = await Promise.all([
-          service.getCharacteristic(sensorCharacteristicUuid),
-          service.getCharacteristic(motorControlCharacteristicUuid)
-        ]);
-
-        sensorCharacteristic = characteristics[0];
-        motorControlCharacteristic = characteristics[1];
-
-        sensorCharacteristic.addEventListener('characteristicvaluechanged', handleSensorValueChanged);
-        await sensorCharacteristic.startNotifications();
-        await sensorCharacteristic.readValue();
-
-        controlsDiv.style.display = 'block';
-        motorStateText.textContent = 'Connected';
-        console.log('Connected to ESP32 BLE');
-      } catch (error) {
-        console.error('Error connecting to ESP32: ', error);
-      }
-    }
-
-    // Handle notifications
-    function handleCharacteristicChange(event) {
-        const newValueReceived = new TextDecoder().decode(event.target.value);
-        console.log("Notification:", newValueReceived);
-        if (retrievedValue) retrievedValue.innerHTML = newValueReceived;
-    }
-
-    // Write to characteristic
-    function writeOnCharacteristic(value) {
-        if (bleServer && bleServer.connected) {
-            bleServiceFound.getCharacteristic(ledCharacteristic)
-            .then(characteristic => {
-                const data = new Uint8Array([value]);
-                return characteristic.writeValue(data);
-            })
-            .then(() => {
-                latestValueSent.innerHTML = value;
-                readLedState(); // Update LED state after writing
-            })
-            .catch(error => {
-                console.error("Write error:", error);
-            });
-        } else {
-            alert("Bluetooth is not connected. Please connect first!");
-        }
-    }
-
-    // Disconnect BLE device
-    function disconnectDevice() {
-        if (bleServer && bleServer.connected) {
-            if (sensorCharacteristicFound) {
-                sensorCharacteristicFound.stopNotifications()
-                .then(() => {
-                    return bleServer.disconnect();
-                })
-                .then(() => {
-                    bleStateContainer.innerHTML = "Device Disconnected";
-                    bleStateContainer.style.color = "#d13a30";
-                })
-                .catch(error => {
-                    console.log("Error during disconnect:", error);
-                });
-            }
-        } else {
-            alert("Bluetooth is not connected.");
-        }
+        // Optionally reconnect:
+        // connectToDevice();
     }
 </script>
+</body>
 </html>
