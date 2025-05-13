@@ -128,6 +128,14 @@
         });
     });
 
+    // Manual Mode Notification
+    const modeToggle = document.getElementById('modeToggle');
+    modeToggle.addEventListener('change', () => {
+        if (modeToggle.checked) {
+            alert("Manual mode active. You can now use the manual control buttons.");
+        }
+    });
+
     // Voice Control
     function runSpeechRecog() {
         const action = document.getElementById("action");
@@ -242,8 +250,6 @@
         console.log('Device Disconnected:', event.target.device.name);
         bleStateContainer.innerHTML = "Device disconnected";
         bleStateContainer.style.color = "#d13a30";
-        // Optionally reconnect:
-        // connectToDevice();
     }
 </script>
 </body>
