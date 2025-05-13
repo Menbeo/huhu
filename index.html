@@ -46,6 +46,10 @@
                 <label for="kd">Kd:</label>
                 <input type="number" id="kd" name="kd">
             </div>
+            <div class="input-group">
+                <label for="setpoint">Set point</label>
+                <input type="number" id="setpoint" name="setpoint">
+            </div>
             <button id="Submission" class="submit-button">Submit</button>
         </div>
 
@@ -99,7 +103,8 @@
         const kp = document.getElementById('kp').value;
         const ki = document.getElementById('ki').value;
         const kd = document.getElementById('kd').value;
-        const pidString = `PID:${kp},${ki},${kd}`;
+        const setpoint = document.getElementById('setpoint').value;
+        const pidString = `PID:${kp},${ki},${kd},${setpoint}`;  // Added setpoint to the string
         console.log("Sending PID values:", pidString);
 
         if (bleServer && bleServer.connected && ledCharacteristicFound) {
