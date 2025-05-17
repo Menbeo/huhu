@@ -568,7 +568,7 @@ return;
 
 calculateAngle(); 
 
-if (abs(angle) > 45) { 
+if (abs(angle) > 30) { 
 
 stopMotors(); 
 
